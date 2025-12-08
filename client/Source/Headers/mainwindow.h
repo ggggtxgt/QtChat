@@ -1,7 +1,17 @@
+/******************************************************************************
+ * @file       mainwindow.h
+ * @brief      主窗口头文件
+ * @author     ggggtxgt
+ * @date       2025/12/8 19:04
+ * @history
+*****************************************************************************/
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+
+#include "logindialog.h"
+#include "registerdialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,8 +25,13 @@ public:
 
     ~MainWindow();
 
+public slots:
+    void SlotSwitchRegister();
+
 private:
     Ui::MainWindow *ui;
+    LoginDialog *_login_dialog;
+    RegisterDialog *_register_dialog;
 };
 
 #endif // MAINWINDOW_H

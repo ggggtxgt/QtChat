@@ -14,11 +14,22 @@ find_package(Qt5 COMPONENTS
         Widgets
         REQUIRED)
 
+set(QRC "../res/qrc/rc.qrc")
+set(ICO "../res/qrc/Qtchat.rc")
+
 add_executable(${PROJECT_NAME}
+        ${QRC}
+        ${ICO}
         Source/main.cpp
         Source/Headers/mainwindow.h
         Source/Forms/mainwindow.ui
-        Source/Cpp/mainwindow.cpp)
+        Source/Cpp/mainwindow.cpp
+        Source/Cpp/logindialog.cpp
+        Source/Headers/logindialog.h
+        Source/Forms/logindialog.ui
+        Source/Cpp/registerdialog.cpp
+        Source/Headers/registerdialog.h
+        Source/Forms/registerdialog.ui)
 
 target_link_libraries(QtChat
         Qt5::Core
