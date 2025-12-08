@@ -3,6 +3,14 @@ QDialog#LoginDialog,#RegisterDialog{
     background-color:rgb(255,255,255)
 }
 
-#user_label,#pass_label{
+#user_label,#password_label{
     color:black;
+}
+
+#error_tip[state='normal']{
+    color: green;
+}
+
+#error_tip[state='error']{
+    color: red;
 }

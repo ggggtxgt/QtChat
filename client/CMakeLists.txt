@@ -29,7 +29,9 @@ add_executable(${PROJECT_NAME}
         Source/Forms/logindialog.ui
         Source/Cpp/registerdialog.cpp
         Source/Headers/registerdialog.h
-        Source/Forms/registerdialog.ui)
+        Source/Forms/registerdialog.ui
+        Source/Headers/global.h
+        Source/Cpp/global.cpp)
 
 target_link_libraries(QtChat
         Qt5::Core

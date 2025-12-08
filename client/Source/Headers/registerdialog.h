@@ -23,6 +23,13 @@ public:
 
     ~RegisterDialog() override;
 
+private slots:
+
+    void on_get_code_clicked();
+
+private:
+    void showTip(QString string, bool ok);
+
 private:
     Ui::RegisterDialog *ui;
 };

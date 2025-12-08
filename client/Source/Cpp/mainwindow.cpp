@@ -11,29 +11,24 @@
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
-    _login_dialog = new LoginDialog();
+    _login_dialog = new LoginDialog(this);
 
     // 将登录窗口设置为主窗口的核心窗口
     setCentralWidget(_login_dialog);
-    _login_dialog->show();
+    // _login_dialog->show();
 
     // 创建[注册按钮]的连接
     connect(_login_dialog, &LoginDialog::switchRegister, this, &MainWindow::SlotSwitchRegister);
-    _register_dialog = new RegisterDialog();
+    _register_dialog = new RegisterDialog(this);
+
+    // 将登录、注册窗口嵌入主窗口
+    _login_dialog->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+    _register_dialog->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+    _register_dialog->hide();
 }
 
 MainWindow::~MainWindow() {
     delete ui;
-
-    // 未指定父对象，自行回收申请的内存空间
-    if (_login_dialog) {
-        delete _login_dialog;
-        _login_dialog = nullptr;
-    }
-    if (_register_dialog) {
-        delete _register_dialog;
-        _register_dialog = nullptr;
-    }
 }
 
 void MainWindow::SlotSwitchRegister() {
