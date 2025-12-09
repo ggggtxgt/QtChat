@@ -10,6 +10,8 @@
 
 #include <QDialog>
 
+#include "global.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class RegisterDialog; }
@@ -27,11 +29,16 @@ private slots:
 
     void on_get_code_clicked();
 
+    void slot_register_finish(RequestId id, QString str, ErrorCodes code);
+
 private:
     void showTip(QString string, bool ok);
 
+    void initHttpHandlers();
+
 private:
     Ui::RegisterDialog *ui;
+    QMap<RequestId, std::function<void(const QJsonObject &)>> _handlers;
 };
 
 

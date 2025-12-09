@@ -12,6 +12,7 @@ find_package(Qt5 COMPONENTS
         Core
         Gui
         Widgets
+        Network
         REQUIRED)
 
 set(QRC "../res/qrc/rc.qrc")
@@ -31,12 +32,16 @@ add_executable(${PROJECT_NAME}
         Source/Headers/registerdialog.h
         Source/Forms/registerdialog.ui
         Source/Headers/global.h
-        Source/Cpp/global.cpp)
+        Source/Cpp/global.cpp
+        Source/Headers/singleton.h
+        Source/Cpp/httpmanager.cpp
+        Source/Headers/httpmanager.h)
 
 target_link_libraries(QtChat
         Qt5::Core
         Qt5::Gui
         Qt5::Widgets
+        Qt5::Network
 )
 
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
