@@ -3,7 +3,16 @@ cmake-build-debug/*
 
 client/.idea/*
 client/cmake-build-debug/*
+client/cmake-build-debug-msvc/*
+client/cmake-build-debug-qt-mingw/*
 
 server/.idea/*
 server/GateServer/.idae/*
+server/cmake-build-debug/*
+server/cmake-build-debug-msvc/*
+server/cmake-build-debug-visualstudio2022/*
+
 server/GateServer/cmake-build-debug/*
+server/GateServer/cmake-build-debug-msvc/*
+server/GateServer/cmake-build-debug-qt-mingw/*
+server/GateServer/cmake-build-debug-visualstudio2022/*
