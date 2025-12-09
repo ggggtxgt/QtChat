@@ -1,3 +1,9 @@
-client/cmake-build-debug/*
-client/.idea/*
 .idea/*
+cmake-build-debug/*
+
+client/.idea/*
+client/cmake-build-debug/*
+
+server/.idea/*
+server/GateServer/.idae/*
+server/GateServer/cmake-build-debug/*

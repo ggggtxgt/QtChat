@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 4.0)
-project(QtChat)
+project(QtClient)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_AUTOMOC ON)
@@ -15,8 +15,8 @@ find_package(Qt5 COMPONENTS
         Network
         REQUIRED)
 
-set(QRC "../res/qrc/rc.qrc")
-set(ICO "../res/qrc/Qtchat.rc")
+set(QRC "res/qrc/rc.qrc")
+set(ICO "res/qrc/Qtchat.rc")
 
 add_executable(${PROJECT_NAME}
         ${QRC}
@@ -37,7 +37,7 @@ add_executable(${PROJECT_NAME}
         Source/Cpp/httpmanager.cpp
         Source/Headers/httpmanager.h)
 
-target_link_libraries(QtChat
+target_link_libraries(${PROJECT_NAME}
         Qt5::Core
         Qt5::Gui
         Qt5::Widgets

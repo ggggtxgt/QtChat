@@ -12,6 +12,7 @@ HttpManager::~HttpManager() {
 }
 
 HttpManager::HttpManager() {
+    // 连接http请求和完成信号，信号槽机制保证队列消费
     connect(this, &HttpManager::signal_http_finish, this, &HttpManager::slot_http_finish);
 }
 

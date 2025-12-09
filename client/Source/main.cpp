@@ -15,13 +15,12 @@ int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     QFile qss("../res/style/stylesheet.qss");
 
-    if( qss.open(QFile::ReadOnly))
-    {
+    if (qss.open(QFile::ReadOnly)) {
         qDebug("open success");
         QString style = QLatin1String(qss.readAll());
         a.setStyleSheet(style);
         qss.close();
-    }else{
+    } else {
         qDebug("Open failed");
     }
     MainWindow w;
