@@ -12,6 +12,14 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../application/jsoncpp/
 
 add_executable(${PROJECT_NAME}
         GateServer.cpp
+        Cpp/CServer.cpp
+        Headers/CServer.h
+        Headers/const.h
+        Cpp/HttpConnection.cpp
+        Headers/HttpConnection.h
+        Headers/Singleton.h
+        Cpp/LogicSystem.cpp
+        Headers/LogicSystem.h
 )
 
 # jsoncpp lib库
