@@ -29,6 +29,8 @@ Q_OBJECT
 public:
     ~HttpManager();
 
+    void PostHttpRequest(QUrl url, QJsonObject json, RequestId id, Modules module);
+
 private:
     // 为何需要使用友无？？？
     // 在 Singleton 类中，_instance = std::shared_ptr<T>(new T);
@@ -36,8 +38,6 @@ private:
     friend class Singleton<HttpManager>;
 
     HttpManager();
-
-    void PostHttpRequest(QUrl url, QJsonObject json, RequestId id, Modules module);
 
 private:
     QNetworkAccessManager _manager;

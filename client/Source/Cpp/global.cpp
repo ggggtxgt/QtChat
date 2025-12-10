@@ -7,6 +7,8 @@
 *****************************************************************************/
 #include "../Headers/global.h"
 
+QString gate_url_prefix = "";
+
 std::function<void(QWidget *)> repolish = [](QWidget *widget) {
     // 取消当前的样式，重新加载新样式
     widget->style()->unpolish(widget);

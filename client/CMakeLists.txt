@@ -44,6 +44,15 @@ target_link_libraries(${PROJECT_NAME}
         Qt5::Network
 )
 
+# 复制config.ini到输出目录
+if(WIN32)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${CMAKE_CURRENT_SOURCE_DIR}/config.ini"
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    )
+endif()
+
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     set(DEBUG_SUFFIX)
     if (MSVC AND CMAKE_BUILD_TYPE MATCHES "Debug")

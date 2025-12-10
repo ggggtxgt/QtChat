@@ -40,6 +40,12 @@ void RegisterDialog::on_get_code_clicked() {
     bool match = regex.match(email).hasMatch();
     if (match) {
         // 发送Http验证码
+        QJsonObject json;
+        json["email"] = email;
+        // HttpManager::GetInstance()->PostHttpRequest(QUrl("http://localhost:8080/get_varify_code"), json,
+        //                                             RequestId::ID_GET_VARIFY_CODE, Modules::REGISTERMOD);
+        HttpManager::GetInstance()->PostHttpRequest(QUrl(gate_url_prefix + "/get_varify_code"), json,
+                                                     RequestId::ID_GET_VARIFY_CODE, Modules::REGISTERMOD);
     } else {
         showTip(tr("邮箱地址错误"), false);
     }
