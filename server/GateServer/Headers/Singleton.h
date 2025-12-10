@@ -1,4 +1,4 @@
-#ifndef GATESERVER_SINGLETON_H
+﻿#ifndef GATESERVER_SINGLETON_H
 #define GATESERVER_SINGLETON_H
 
 #include <mutex>
