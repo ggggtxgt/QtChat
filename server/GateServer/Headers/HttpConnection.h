@@ -22,9 +22,10 @@ private:
 
 private:
     tcp::socket _socket;
-    beast::flat_buffer _buffer{8192};
-    http::request<http::dynamic_body> _request;
-    http::response<http::dynamic_body> _response;
+    beast::flat_buffer _buffer{8192};               // 接收数据
+    http::request<http::dynamic_body> _request;     // 解析请求
+    http::response<http::dynamic_body> _response;   // 回应客户端
+    // 定时器（判断请求是否超时）
     net::steady_timer deadline_{_socket.get_executor(), std::chrono::seconds(60)};
 
     std::string _get_url;

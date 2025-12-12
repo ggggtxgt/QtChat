@@ -13,6 +13,9 @@
 #include <boost/asio.hpp>
 #include <boost/beast.hpp>
 #include <boost/beast/http.hpp>
+#include <boost/filesystem.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/ini_parser.hpp>
 
 #include "Singleton.h"
 
@@ -26,5 +29,9 @@ enum ErrorCodes {
     Error_Json = 1001,
     RPCFailed = 1002,
 };
+
+// 前置声明
+class ConfigMgr;
+extern ConfigMgr gCfgMgr;
 
 #endif //GATESERVER_CONST_H

@@ -6,6 +6,11 @@ HttpConnection::HttpConnection(tcp::socket socket) : _socket(std::move(socket)) 
 
 void HttpConnection::Start() {
     auto self = shared_from_this();
+    // 调用http::async_read函数
+    // 参数1：异步可读的数据流，可以理解为 socket
+    // 参数2：用于存储接受的数据（由于可能存储文本、图像、音频，因此使用Dynamic动态类型的buffer）
+    // 参数3：请求参数（一般需要传递能够接受多种资源类型的请求参数）
+    // 参数4：回调函数（接受成功或失败，都将触发回调函数，使用Lambda表达式即可）
     http::async_read(_socket, _buffer, _request, [self](beast::error_code error, std::size_t bytes_transferred) {
         try {
             if (error) {
@@ -125,6 +130,8 @@ void HttpConnection::PreParseGetParam() {
 void HttpConnection::HandleRequest() {
     // 设置版本
     _response.version(_request.version());
+
+    // 设置为短连接
     _response.keep_alive(false);
 
     // 处理 http get 请求
@@ -173,7 +180,9 @@ void HttpConnection::WriteResponse() {
     auto self = shared_from_this();
     _response.content_length(_response.body().size());
     http::async_write(_socket, _response, [self](beast::error_code error, std::size_t bytes_transferred) {
+        // 由于http为短连接。因此发送数据之后不需要监听对方连接，直接断开连接即可
         self->_socket.shutdown(tcp::socket::shutdown_send, error);
+        // http请求具有时间约束，发送的数据包不能超时，因此发送时启动定时器，收到发送的回调之后取消定时器
         self->deadline_.cancel();
     });
 }
@@ -183,7 +192,7 @@ void HttpConnection::CheckDeadline() {
     deadline_.async_wait([self](beast::error_code error) {
         // 客户端已超时，则关闭
         if (!error) {
-            self->_socket.close();
+            self->_socket.close(error);
         }
     });
 }

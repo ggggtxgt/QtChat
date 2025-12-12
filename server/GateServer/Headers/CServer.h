@@ -5,8 +5,10 @@
 
 class CServer : public std::enable_shared_from_this<CServer> {
 public:
+    // 构造函数
     CServer(boost::asio::io_context &ioc, unsigned short &port);
 
+    // 监听新连接
     void Start();
 
 private:

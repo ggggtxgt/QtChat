@@ -21,7 +21,6 @@ void CServer::Start() {
             self->Start();
         }
         catch (std::exception &exp) {
-
         }
     });
 }
