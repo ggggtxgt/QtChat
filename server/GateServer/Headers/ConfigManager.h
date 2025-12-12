@@ -59,5 +59,4 @@ private:
     std::map<std::string, SectionInfo> _config_map;
 };
 
-
 #endif //GATESERVER_CONFIGMANAGER_H

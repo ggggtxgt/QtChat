@@ -16,3 +16,5 @@ server/GateServer/cmake-build-debug/*
 server/GateServer/cmake-build-debug-msvc/*
 server/GateServer/cmake-build-debug-qt-mingw/*
 server/GateServer/cmake-build-debug-visualstudio2022/*
+
+server/VarifyServer/node_modules/*
