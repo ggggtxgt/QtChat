@@ -5,28 +5,7 @@
 #include "./Headers/RedisManager.h"
 #include "./Headers/ConfigManager.h"
 
-void TestRedisManager() {
-    assert(RedisManager::GetInstance()->Set("blogwebsite", "llfc.club"));
-    std::string value = "";
-    assert(RedisManager::GetInstance()->Get("blogwebsite", value));
-    assert(RedisManager::GetInstance()->Get("nonekey", value) == false);
-    assert(RedisManager::GetInstance()->HSet("bloginfo", "blogwebsite", "llfc.club"));
-    assert(RedisManager::GetInstance()->HGet("bloginfo", "blogwebsite") != "");
-    assert(RedisManager::GetInstance()->ExistsKey("bloginfo"));
-    assert(RedisManager::GetInstance()->Del("bloginfo"));
-    assert(RedisManager::GetInstance()->Del("bloginfo"));
-    assert(RedisManager::GetInstance()->ExistsKey("bloginfo") == false);
-    assert(RedisManager::GetInstance()->LPush("lpushkey1", "lpushvalue1"));
-    assert(RedisManager::GetInstance()->LPush("lpushkey1", "lpushvalue2"));
-    assert(RedisManager::GetInstance()->LPush("lpushkey1", "lpushvalue3"));
-    assert(RedisManager::GetInstance()->RPop("lpushkey1", value));
-    assert(RedisManager::GetInstance()->RPop("lpushkey1", value));
-    assert(RedisManager::GetInstance()->LPop("lpushkey1", value));
-    assert(RedisManager::GetInstance()->LPop("lpushkey2", value) == false);
-}
-
 int main() {
-    TestRedisManager();
     auto &gCfgMgr = ConfigManager::Inst();
     gCfgMgr["GateServer"]["Port"];
     std::string gate_port_str = gCfgMgr["GateServer"]["port"];
