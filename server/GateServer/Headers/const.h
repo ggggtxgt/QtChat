@@ -2,10 +2,14 @@
 #define GATESERVER_CONST_H
 
 #include <map>
+#include <mutex>
+#include <queue>
+#include <atomic>
 #include <memory>
 #include <iostream>
 #include <functional>
 #include <unordered_map>
+#include <condition_variable>
 
 #include <json/json.h>
 #include <json/value.h>
@@ -29,9 +33,5 @@ enum ErrorCodes {
     Error_Json = 1001,
     RPCFailed = 1002,
 };
-
-// 前置声明
-class ConfigMgr;
-extern ConfigMgr gCfgMgr;
 
 #endif //GATESERVER_CONST_H

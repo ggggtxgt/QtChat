@@ -14,7 +14,7 @@ public:
 private:
     tcp::acceptor _acceptor;
     net::io_context &_io_context;
-    tcp::socket _socket;
+    // tcp::socket _socket;
 };
 
 #endif //GATESERVER_CSERVER_H

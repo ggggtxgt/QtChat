@@ -59,6 +59,8 @@ add_executable(${PROJECT_NAME}
         Headers/VerifyGrpcClient.h
         Cpp/ConfigManager.cpp
         Headers/ConfigManager.h
+        Cpp/AsioIOServicePool.cpp
+        Headers/AsioIOServicePool.h
 )
 
 # 复制config.ini到输出目录

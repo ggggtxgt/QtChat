@@ -4,7 +4,7 @@
 #include "./Headers/ConfigManager.h"
 
 int main() {
-    ConfigManager gCfgMgr;
+    auto &gCfgMgr = ConfigManager::Inst();
     gCfgMgr["GateServer"]["Port"];
     std::string gate_port_str = gCfgMgr["GateServer"]["port"];
     unsigned short gate_port = atoi(gate_port_str.c_str());

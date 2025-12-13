@@ -17,6 +17,7 @@ struct SectionInfo {
             return *this;
         }
         this->_section_datas = src._section_datas;
+        return *this;
     }
 
     std::string operator[](const std::string &key) {
@@ -42,8 +43,6 @@ public:
         return _config_map[section];
     }
 
-    ConfigManager();
-
     ConfigManager(const ConfigManager &src) {
         _config_map = src._config_map;
     }
@@ -54,6 +53,15 @@ public:
         }
         _config_map = src._config_map;
     }
+
+    static ConfigManager &Inst() {
+        // 局部静态变量的生命周期与进程同步，但其作用域仅限于局部（C++11标准之后）
+        static ConfigManager cfg_mgr;
+        return cfg_mgr;
+    }
+
+private:
+    ConfigManager();
 
 private:
     std::map<std::string, SectionInfo> _config_map;
