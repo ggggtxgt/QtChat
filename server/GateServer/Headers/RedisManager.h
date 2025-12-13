@@ -2,14 +2,13 @@
 #define GATESERVER_REDISMANAGER_H
 
 #include "const.h"
+#include "RedisConnectionPool.h"
 
 class RedisManager : public Singleton<RedisManager> {
     friend class Singleton<RedisManager>;
 
 public:
     ~RedisManager();
-
-    bool Connect(const std::string &host, int port);
 
     bool Get(const std::string &key, std::string &value);
 
@@ -41,8 +40,7 @@ private:
     RedisManager();
 
 private:
-    redisContext *_connect;
-    redisReply *_reply;
+    std::unique_ptr<RedisConnectionPool> _conn_pool;
 };
 
 #endif //GATESERVER_REDISMANAGER_H

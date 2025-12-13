@@ -6,8 +6,6 @@
 #include "./Headers/ConfigManager.h"
 
 void TestRedisManager() {
-    assert(RedisManager::GetInstance()->Connect("81.68.86.146", 6380));
-    assert(RedisManager::GetInstance()->Auth("123456"));
     assert(RedisManager::GetInstance()->Set("blogwebsite", "llfc.club"));
     std::string value = "";
     assert(RedisManager::GetInstance()->Get("blogwebsite", value));
@@ -25,7 +23,6 @@ void TestRedisManager() {
     assert(RedisManager::GetInstance()->RPop("lpushkey1", value));
     assert(RedisManager::GetInstance()->LPop("lpushkey1", value));
     assert(RedisManager::GetInstance()->LPop("lpushkey2", value) == false);
-    RedisManager::GetInstance()->Close();
 }
 
 int main() {
