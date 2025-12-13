@@ -6,6 +6,7 @@
 #include <queue>
 #include <atomic>
 #include <memory>
+#include <cassert>
 #include <iostream>
 #include <functional>
 #include <unordered_map>

@@ -67,6 +67,8 @@ add_executable(${PROJECT_NAME}
         Headers/ConfigManager.h
         Cpp/AsioIOServicePool.cpp
         Headers/AsioIOServicePool.h
+        Cpp/RedisManager.cpp
+        Headers/RedisManager.h
 )
 
 # 复制config.ini到输出目录
