@@ -17,6 +17,9 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../application/grpc/thi
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../application/grpc/third_party/protobuf/src)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../application/grpc/include)
 
+# HiRedis 头文件
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../application/redis/redis/deps/hiredis)
+
 # 添加所有 GRPC 库路径
 set(GRPC_LIBRARY_PATHS
         "${CMAKE_CURRENT_SOURCE_DIR}/../../../../application/grpc/VisualStudio/third_party/re2/Debug"
@@ -39,6 +42,9 @@ set(GRPC_LIBRARY_PATHS
         "${CMAKE_CURRENT_SOURCE_DIR}/../../../../application/grpc/VisualStudio/third_party/cares/cares/lib/Debug"
 )
 link_directories(${GRPC_LIBRARY_PATHS})
+
+# 添加 HiRedis 库路径
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../application/redis/redis/lib)
 
 add_executable(${PROJECT_NAME}
         GateServer.cpp
@@ -77,7 +83,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/../../../../application/jsoncpp/libjson/lib/json_vc71_libmtd.lib
 )
 
-# 添加到链接库
+# 添加到 grpc 链接库
 target_link_libraries(${PROJECT_NAME} PRIVATE
         libprotobufd.lib
         gpr.lib
@@ -146,4 +152,10 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         absl_time_zone.lib
         absl_statusor.lib
         re2.lib
+)
+
+# HiRedis 连接库
+target_link_libraries(${PROJECT_NAME} PRIVATE
+        hiredis.lib
+        Win32_Interop.lib
 )

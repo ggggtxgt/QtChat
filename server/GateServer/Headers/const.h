@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include <condition_variable>
 
+#include <hiredis.h>
 #include <json/json.h>
 #include <json/value.h>
 #include <json/reader.h>
