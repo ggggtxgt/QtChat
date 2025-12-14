@@ -45,7 +45,7 @@ void RegisterDialog::on_get_code_clicked() {
         // HttpManager::GetInstance()->PostHttpRequest(QUrl("http://localhost:8080/get_varify_code"), json,
         //                                             RequestId::ID_GET_VARIFY_CODE, Modules::REGISTERMOD);
         HttpManager::GetInstance()->PostHttpRequest(QUrl(gate_url_prefix + "/get_varify_code"), json,
-                                                     RequestId::ID_GET_VARIFY_CODE, Modules::REGISTERMOD);
+                                                    RequestId::ID_GET_VARIFY_CODE, Modules::REGISTERMOD);
     } else {
         showTip(tr("邮箱地址错误"), false);
     }
@@ -71,6 +71,47 @@ void RegisterDialog::slot_register_finish(RequestId id, QString str, ErrorCodes 
     return;
 }
 
+void RegisterDialog::on_sure_btn_clicked() {
+    if (ui->user_edit->text() == "") {
+        showTip(tr("用户名不能为空"), false);
+        return;
+    }
+
+    if (ui->email_edit->text() == "") {
+        showTip(tr("邮箱不能为空"), false);
+        return;
+    }
+
+    if (ui->password_edit->text() == "") {
+        showTip(tr("密码不能为空"), false);
+        return;
+    }
+
+    if (ui->confirm_edit->text() == "") {
+        showTip(tr("确认密码不能为空"), false);
+        return;
+    }
+
+    if (ui->confirm_edit->text() != ui->password_edit->text()) {
+        showTip(tr("密码和确认密码不匹配"), false);
+        return;
+    }
+
+    if (ui->varify_edit->text() == "") {
+        showTip(tr("验证码不能为空"), false);
+        return;
+    }
+
+    QJsonObject json_obj;
+    json_obj["user"] = ui->user_edit->text();
+    json_obj["email"] = ui->email_edit->text();
+    json_obj["passwd"] = ui->password_edit->text();
+    json_obj["confirm"] = ui->confirm_edit->text();
+    json_obj["varifycode"] = ui->varify_edit->text();
+    HttpManager::GetInstance()->PostHttpRequest(QUrl(gate_url_prefix + "/user_register"),
+                                                json_obj, RequestId::ID_REGISTER_USER, Modules::REGISTERMOD);
+}
+
 
 void RegisterDialog::initHttpHandlers() {
     // 获取验证码回包
@@ -83,6 +124,18 @@ void RegisterDialog::initHttpHandlers() {
 
         auto email = json["email"].toString();
         showTip(tr("验证码已发送至邮箱，注意查收"), true);
+        qDebug() << "email is " << email;
+    });
+
+    // 注册用户回包逻辑
+    _handlers.insert(RequestId::ID_REGISTER_USER, [this](QJsonObject jsonObj) {
+        int error = jsonObj["error"].toInt();
+        if (error != ErrorCodes::SUCCESS) {
+            showTip(tr("参数错误"), false);
+            return;
+        }
+        auto email = jsonObj["email"].toString();
+        showTip(tr("用户注册成功"), true);
         qDebug() << "email is " << email;
     });
 }

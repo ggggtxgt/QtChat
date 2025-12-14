@@ -31,6 +31,8 @@ private slots:
 
     void slot_register_finish(RequestId id, QString str, ErrorCodes code);
 
+    void on_sure_btn_clicked();
+
 private:
     void showTip(QString string, bool ok);
 
