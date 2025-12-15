@@ -20,6 +20,9 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../application/grpc/inc
 # HiRedis 头文件
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../application/redis/redis/deps/hiredis)
 
+# Mysql Connector C++ 头文件
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../application/MySql/mysql_connector/include)
+
 # 添加所有 GRPC 库路径
 set(GRPC_LIBRARY_PATHS
         "${CMAKE_CURRENT_SOURCE_DIR}/../../../../application/grpc/VisualStudio/third_party/re2/Debug"
@@ -46,6 +49,9 @@ link_directories(${GRPC_LIBRARY_PATHS})
 # 添加 HiRedis 库路径
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../application/redis/redis/lib)
 
+# Mysql Connector C++ 库路径
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../../application/MySql/mysql_connector/lib64/vs14/debug)
+
 add_executable(${PROJECT_NAME}
         GateServer.cpp
         Cpp/CServer.cpp
@@ -71,16 +77,32 @@ add_executable(${PROJECT_NAME}
         Headers/RedisManager.h
         Cpp/RedisConnectionPool.cpp
         Headers/RedisConnectionPool.h
+        Cpp/MysqlDao.cpp
+        Headers/MysqlDao.h
+        Cpp/MysqlManager.cpp
+        Headers/MysqlManager.h
 )
 
 # 复制config.ini到输出目录
-if(WIN32)
+if (WIN32)
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy_if_different
             "${CMAKE_CURRENT_SOURCE_DIR}/config.ini"
             $<TARGET_FILE_DIR:${PROJECT_NAME}>
     )
-endif()
+endif ()
+
+## 复制dll文件到输出目录
+if (WIN32)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${CMAKE_CURRENT_SOURCE_DIR}/lib/mysqlcppconn8-2-vs14.dll"
+            "${CMAKE_CURRENT_SOURCE_DIR}/lib/mysqlcppconn-9-vs14.dll"
+            "${CMAKE_CURRENT_SOURCE_DIR}/lib/libcrypto-3-x64.dll"
+            "${CMAKE_CURRENT_SOURCE_DIR}/lib/libssl-3-x64.dll"
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    )
+endif ()
 
 # jsoncpp lib库
 target_link_libraries(${PROJECT_NAME} PRIVATE
@@ -162,4 +184,10 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 target_link_libraries(${PROJECT_NAME} PRIVATE
         hiredis.lib
         Win32_Interop.lib
+)
+
+# Mysql Connector C++ 库
+target_link_libraries(${PROJECT_NAME} PRIVATE
+        mysqlcppconn.lib
+        mysqlcppconn8.lib
 )

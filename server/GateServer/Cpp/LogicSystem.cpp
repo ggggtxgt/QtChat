@@ -1,5 +1,6 @@
 #include "../Headers/LogicSystem.h"
 #include "../Headers/RedisManager.h"
+#include "../Headers/MysqlManager.h"
 #include "../Headers/HttpConnection.h"
 #include "../Headers/VerifyGrpcClient.h"
 
@@ -67,6 +68,19 @@ LogicSystem::LogicSystem() {
             return true;
         }
 
+        auto email = src_root["email"].asString();
+        auto name = src_root["user"].asString();
+        auto pwd = src_root["passwd"].asString();
+        auto confirm = src_root["confirm"].asString();
+
+        if (pwd != confirm) {
+            std::cout << "password err" << std::endl;
+            root["error"] = ErrorCodes::PasswordErr;
+            std::string jsonstr = root.toStyledString();
+            beast::ostream(connection->_response.body()) << jsonstr;
+            return true;
+        }
+
         // 先查找redis中email对应的验证码是否合理
         std::string varify_code;
         // 注意需要添加前缀
@@ -101,11 +115,21 @@ LogicSystem::LogicSystem() {
         */
 
         // 查找数据库判断用户是否存在
+        int uid = MysqlManager::GetInstance()->RegUser(name, email, pwd);
+        if (0 == uid || -1 == uid) {
+            std::cout << "user or email exist" << std::endl;
+            root["error"] = ErrorCodes::UserExist;
+            std::string jsonstr = root.toStyledString();
+            beast::ostream(connection->_response.body()) << jsonstr;
+            return true;
+        }
+
         root["error"] = 0;
-        root["email"] = src_root["email"];
-        root["user"] = src_root["user"].asString();
-        root["passwd"] = src_root["passwd"].asString();
-        root["confirm"] = src_root["confirm"].asString();
+        root["uid"] = uid;
+        root["email"] = email;
+        root["user"] = name;
+        root["passwd"] = pwd;
+        root["confirm"] = confirm;
         root["varifycode"] = src_root["varifycode"].asString();
         std::string jsonstr = root.toStyledString();
         beast::ostream(connection->_response.body()) << jsonstr;

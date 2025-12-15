@@ -2,7 +2,6 @@
 
 #include "./Headers/const.h"
 #include "./Headers/CServer.h"
-#include "./Headers/RedisManager.h"
 #include "./Headers/ConfigManager.h"
 
 int main() {

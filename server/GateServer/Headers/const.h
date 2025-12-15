@@ -41,6 +41,21 @@ enum ErrorCodes {
     EmailNotMatch = 1007,       // 邮箱不匹配
     PasswordUpFailed = 1008,    // 更新密码失败
     PasswordInvalid = 1009,     // 密码更新失败
+    RPCGetFailed = 1010         // 获取RCP请求失败
+};
+
+class Defer {
+public:
+    // 接受一个 lambda 表达式或者函数指针
+    Defer(std::function<void()> func) : func_(func) {}
+
+    // 析构函数中执行传入的函数
+    ~Defer() {
+        func_();
+    }
+
+private:
+    std::function<void()> func_;
 };
 
 // 添加前缀
