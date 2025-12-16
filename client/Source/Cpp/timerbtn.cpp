@@ -24,6 +24,11 @@ TimerBtn::~TimerBtn() {
 
 // @todo 即使未输入任何内容，也可点击[获取]按钮
 void TimerBtn::mouseReleaseEvent(QMouseEvent *event) {
+    // 先调用基类 mouseReleaseEvent 确保正常的事件处理
+    // 如果在后面才调用，就会出现无法正常解决 on_get_code_clicked() 槽函数的问题
+    QPushButton::mouseReleaseEvent(event);
+    qDebug() << "QPushButton::mouseReleaseEvent(event);";
+
     if (event->button() == Qt::LeftButton) {
         // 处理鼠标左键释放事件
         qDebug() << "MyButton was released!";
@@ -32,6 +37,4 @@ void TimerBtn::mouseReleaseEvent(QMouseEvent *event) {
         _timer->start(1000);
         emit click();
     }
-    // 调用基类 mouseReleaseEvent 确保正常的事件处理
-    QPushButton::mouseReleaseEvent(event);
 }
