@@ -105,8 +105,8 @@ void RegisterDialog::on_sure_btn_clicked() {
     QJsonObject json_obj;
     json_obj["user"] = ui->user_edit->text();
     json_obj["email"] = ui->email_edit->text();
-    json_obj["passwd"] = ui->password_edit->text();
-    json_obj["confirm"] = ui->confirm_edit->text();
+    json_obj["passwd"] = md5Encrypt(ui->password_edit->text());
+    json_obj["confirm"] = md5Encrypt(ui->confirm_edit->text());
     json_obj["varifycode"] = ui->varify_edit->text();
     HttpManager::GetInstance()->PostHttpRequest(QUrl(gate_url_prefix + "/user_register"),
                                                 json_obj, RequestId::ID_REGISTER_USER, Modules::REGISTERMOD);
@@ -136,7 +136,7 @@ void RegisterDialog::initHttpHandlers() {
         }
         auto email = jsonObj["email"].toString();
         showTip(tr("用户注册成功"), true);
-        qDebug() << "user uid is: " << jsonObj["uid"].toString();
+        qDebug() << "user uid is: " << jsonObj["uid"].toInt();
         qDebug() << "email is " << email;
     });
 }

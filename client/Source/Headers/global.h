@@ -19,6 +19,7 @@
 #include <QByteArray>
 #include <functional>
 #include <QJsonObject>
+#include <QCryptographicHash>
 #include <QRegularExpression>
 
 // repolish 用于刷新 qss 样式
@@ -26,6 +27,9 @@ extern std::function<void(QWidget *)> repolish;
 
 // 发送的网络前缀
 extern QString gate_url_prefix;
+
+// 通过md5进行加密
+extern QString md5Encrypt(const QString &input);
 
 enum RequestId {
     ID_GET_VARIFY_CODE = 1001,      // 获取验证码

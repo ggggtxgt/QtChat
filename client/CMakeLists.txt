@@ -15,8 +15,13 @@ find_package(Qt5 COMPONENTS
         Network
         REQUIRED)
 
+# 包含头文件目录，以便能在 ui_xxx.h 文件中找到
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Source/Headers)
+
 set(QRC "res/qrc/rc.qrc")
-set(ICO "res/qrc/Qtchat.rc")
+set(ICO "res/qrc/Qtchat.rc"
+        Source/Cpp/timerbtn.cpp
+        Source/Headers/timerbtn.h)
 
 add_executable(${PROJECT_NAME}
         ${QRC}
