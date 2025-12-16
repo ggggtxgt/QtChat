@@ -52,11 +52,25 @@ private:
 
     bool checkVarifyValid();
 
+    void changeTipPage();
+
 private:
     Ui::RegisterDialog *ui;
     QMap<RequestId, std::function<void(const QJsonObject &)>> _handlers;
 
     QMap<TipErr, QString> _tip_errs;
+    QTimer *_countdown_timer;
+    int _countdown;
+
+signals:
+
+    void sigSwitchLogin();
+
+public slots:
+
+    void on_return_btn_clicked();
+
+    void on_cancel_btn_clicked();
 };
 
 

@@ -11,7 +11,7 @@
 #include "../Forms/ui_RegisterDialog.h"
 
 RegisterDialog::RegisterDialog(QWidget *parent) :
-        QDialog(parent), ui(new Ui::RegisterDialog) {
+        QDialog(parent), ui(new Ui::RegisterDialog), _countdown(5) {
     ui->setupUi(this);
 
     // 将注册窗口中的 lineEdit 输入输入模式设置为密码模式
@@ -81,6 +81,20 @@ RegisterDialog::RegisterDialog(QWidget *parent) :
             ui->confirm_edit->setEchoMode(QLineEdit::Normal);
         }
         qDebug() << "Label was clicked!";
+    });
+
+    // 创建定时器
+    _countdown_timer = new QTimer(this);
+    // 连接定时器的信号和槽
+    connect(_countdown_timer, &QTimer::timeout, [this]() {
+        if (0 == _countdown) {
+            _countdown_timer->stop();
+            emit sigSwitchLogin();
+            return;
+        }
+        _countdown--;
+        auto str = QString("注册成功，%1 秒之后返回登录").arg(_countdown);
+        ui->tip01_lb->setText(str);
     });
 }
 
@@ -182,6 +196,8 @@ void RegisterDialog::initHttpHandlers() {
         showTip(tr("用户注册成功"), true);
         qDebug() << "user uid is: " << jsonObj["uid"].toInt();
         qDebug() << "email is " << email;
+        // 注册成功之后，切换回到登录界面
+        changeTipPage();
     });
 }
 
@@ -271,4 +287,22 @@ bool RegisterDialog::checkVarifyValid() {
     }
     delTipErr(TipErr::TIP_VARIFY_ERR);
     return true;
+}
+
+void RegisterDialog::changeTipPage() {
+    _countdown_timer->stop();
+    ui->stackedWidget->setCurrentWidget(ui->page_2);
+
+    // 启动定时器，设置间隔为1秒
+    _countdown_timer->start(1000);
+}
+
+void RegisterDialog::on_return_btn_clicked() {
+    _countdown_timer->stop();
+    emit sigSwitchLogin();
+}
+
+void RegisterDialog::on_cancel_btn_clicked() {
+    _countdown_timer->stop();
+    emit sigSwitchLogin();
 }

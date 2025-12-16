@@ -15,16 +15,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     // 将登录窗口设置为主窗口的核心窗口
     setCentralWidget(_login_dialog);
-    // _login_dialog->show();
+    _login_dialog->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+    setCentralWidget(_login_dialog);
 
     // 创建[注册按钮]的连接
     connect(_login_dialog, &LoginDialog::switchRegister, this, &MainWindow::SlotSwitchRegister);
-    _register_dialog = new RegisterDialog(this);
-
-    // 将登录、注册窗口嵌入主窗口
-    _login_dialog->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
-    _register_dialog->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
-    _register_dialog->hide();
 }
 
 MainWindow::~MainWindow() {
@@ -32,7 +27,28 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::SlotSwitchRegister() {
+    _register_dialog = new RegisterDialog(this);
+    _register_dialog->hide();
+
+    // 设置注册窗口的属性标记
+    _register_dialog->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+
+    // 连接注册界面返回登录信号
+    connect(_register_dialog, &RegisterDialog::sigSwitchLogin, this, &MainWindow::SlotSwitchLogin);
+
     setCentralWidget(_register_dialog);
     _login_dialog->hide();
     _register_dialog->show();
+}
+
+void MainWindow::SlotSwitchLogin() {
+    // 创建 CentralWidget，并将其设置为 MainWindow 的中心部件
+    _login_dialog = new LoginDialog(this);
+    _register_dialog->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+    setCentralWidget(_login_dialog);
+
+    _register_dialog->hide();
+    _login_dialog->show();
+    // 连接登录界面注册信号
+    connect(_login_dialog, &LoginDialog::switchRegister, this, &MainWindow::SlotSwitchRegister);
 }
