@@ -40,7 +40,9 @@ add_executable(${PROJECT_NAME}
         Source/Cpp/global.cpp
         Source/Headers/singleton.h
         Source/Cpp/httpmanager.cpp
-        Source/Headers/httpmanager.h)
+        Source/Headers/httpmanager.h
+        Source/Cpp/clickedlabel.cpp
+        Source/Headers/clickedlabel.h)
 
 target_link_libraries(${PROJECT_NAME}
         Qt5::Core

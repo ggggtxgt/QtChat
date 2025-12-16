@@ -38,9 +38,25 @@ private:
 
     void initHttpHandlers();
 
+    void addTipErr(TipErr te, QString tips);
+
+    void delTipErr(TipErr te);
+
+    bool checkUserValid();
+
+    bool checkEmailValid();
+
+    bool checkPassValid();
+
+    bool checkConfirmValid();
+
+    bool checkVarifyValid();
+
 private:
     Ui::RegisterDialog *ui;
     QMap<RequestId, std::function<void(const QJsonObject &)>> _handlers;
+
+    QMap<TipErr, QString> _tip_errs;
 };
 
 

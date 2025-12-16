@@ -14,3 +14,36 @@ QDialog#LoginDialog,#RegisterDialog{
 #error_tip[state='error']{
     color: red;
 }
+
+#password_visible[state='unvisible']{
+   border-image: url(:/unvisible.png);
+}
+
+#password_visible[state='unvisible_hover']{
+   border-image: url(:/unvisible_hover.png);
+}
+
+#password_visible[state='visible']{
+   border-image: url(:/visible.png);
+}
+
+#password_visible[state='visible_hover']{
+   border-image: url(:/visible_hover.png);
+}
+
+
+#confirm_visible[state='unvisible']{
+   border-image: url(:/unvisible.png);
+}
+
+#confirm_visible[state='unvisible_hover']{
+   border-image: url(:/unvisible_hover.png);
+}
+
+#confirm_visible[state='visible']{
+   border-image: url(:/visible.png);
+}
+
+#confirm_visible[state='visible_hover']{
+   border-image: url(:/visible_hover.png);
+}
