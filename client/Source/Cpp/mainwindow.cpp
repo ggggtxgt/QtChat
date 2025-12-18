@@ -53,6 +53,8 @@ void MainWindow::SlotSwitchLogin() {
     _login_dialog->show();
     // 连接登录界面注册信号
     connect(_login_dialog, &LoginDialog::switchRegister, this, &MainWindow::SlotSwitchRegister);
+    // 连接登录界面忘记密码信号
+    connect(_login_dialog, &LoginDialog::switchReset, this, &MainWindow::SlotSwitchReset);
 }
 
 void MainWindow::SlotSwitchReset() {

@@ -36,6 +36,8 @@ private slots:
 
     void on_sure_btn_clicked();
 
+    void on_cancel_btn_clicked();
+
 private:
     void showTip(QString string, bool ok);
 
@@ -73,7 +75,6 @@ public slots:
 
     void on_return_btn_clicked();
 
-    void on_cancel_btn_clicked();
 };
 
 

@@ -109,14 +109,14 @@ void ResetDialog::showTip(QString str, bool b_ok) {
 
 void ResetDialog::on_varify_btn_clicked() {
     qDebug() << "receive varify bin clicked";
-    auto emial = ui->email_edit->text();
+    auto email = ui->email_edit->text();
     auto bcheck = checkEmailValid();
     if (!bcheck) {
         return;
     }
     // 发送 http 请求获取验证码
     QJsonObject json;
-    json["email"] = emial;
+    json["email"] = email;
     HttpManager::GetInstance()->PostHttpRequest(QUrl(gate_url_prefix + "/get_varify_code"),
                                                 json, RequestId::ID_GET_VARIFY_CODE,
                                                 Modules::RESETMOD);
@@ -130,7 +130,7 @@ void ResetDialog::initHandlers() {
             showTip(tr("参数错误"), false);
             return;
         }
-        auto email = json["emial"].toString();
+        auto email = json["email"].toString();
         showTip(tr("验证码已经发送，注意查收"), true);
         qDebug() << "email is: " << email;
     });
