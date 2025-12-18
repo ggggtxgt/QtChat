@@ -2,6 +2,7 @@
 #define GATESERVER_LOGICSYSTEM_H
 
 #include "const.h"
+#include "StatusGrpcClient.h"
 
 class HttpConnection;
 

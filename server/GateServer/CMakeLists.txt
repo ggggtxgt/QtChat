@@ -81,6 +81,8 @@ add_executable(${PROJECT_NAME}
         Headers/MysqlDao.h
         Cpp/MysqlManager.cpp
         Headers/MysqlManager.h
+        Cpp/StatusGrpcClient.cpp
+        Headers/StatusGrpcClient.h
 )
 
 # 复制config.ini到输出目录

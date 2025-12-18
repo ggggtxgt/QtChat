@@ -42,7 +42,8 @@ enum RequestId {
 
 enum Modules {
     REGISTERMOD = 0,                // 注册模块
-    RESETMOD                        // 重置密码模块
+    RESETMOD,                       // 重置密码模块
+    LOGINMOD                        // 登录模块
 };
 
 enum ErrorCodes {
@@ -66,6 +67,13 @@ enum TipErr {
 enum ClickLbState {
     Normal = 0,
     Selected = 1
+};
+
+struct ServerInfo {
+    QString Host;
+    QString Port;
+    QString Token;
+    int Uid;
 };
 
 #endif //QTCHAT_GLOBAL_H

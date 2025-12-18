@@ -12,9 +12,13 @@ server/cmake-build-debug/*
 server/cmake-build-debug-msvc/*
 server/cmake-build-debug-visualstudio2022/*
 
+server/GateServer/.idea/*
 server/GateServer/cmake-build-debug/*
 server/GateServer/cmake-build-debug-msvc/*
 server/GateServer/cmake-build-debug-qt-mingw/*
 server/GateServer/cmake-build-debug-visualstudio2022/*
 
 server/VarifyServer/node_modules/*
+
+server/StatusServer/.idea/*
+server/StatusServer/cmake-build-debug/*

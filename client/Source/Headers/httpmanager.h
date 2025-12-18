@@ -49,6 +49,7 @@ private slots:
 signals:
 
     void signal_http_finish(RequestId id, QString str, ErrorCodes code, Modules module);
+    void signal_login_finish(RequestId id, QString str, ErrorCodes code);
 
     void signal_register_finish(RequestId id, QString str, ErrorCodes code);
 

@@ -69,6 +69,7 @@ void MainWindow::SlotSwitchReset() {
     connect(_reset_dialog, &ResetDialog::switchLogin, this, &MainWindow::SlotSwitchLogin2);
 }
 
+// 从重置页面返回登录界面
 void MainWindow::SlotSwitchLogin2() {
     // 创建 CentralWidget，并将其设置为 MainWindow 的中心部件
     _login_dialog = new LoginDialog(this);
