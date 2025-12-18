@@ -21,7 +21,10 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Source/Headers)
 set(QRC "res/qrc/rc.qrc")
 set(ICO "res/qrc/Qtchat.rc"
         Source/Cpp/timerbtn.cpp
-        Source/Headers/timerbtn.h)
+        Source/Headers/timerbtn.h
+        Source/Cpp/resetdialog.cpp
+        Source/Headers/resetdialog.h
+        Source/Forms/resetdialog.ui)
 
 add_executable(${PROJECT_NAME}
         ${QRC}
@@ -42,7 +45,10 @@ add_executable(${PROJECT_NAME}
         Source/Cpp/httpmanager.cpp
         Source/Headers/httpmanager.h
         Source/Cpp/clickedlabel.cpp
-        Source/Headers/clickedlabel.h)
+        Source/Headers/clickedlabel.h
+        Source/Cpp/resetdialog.cpp
+        Source/Headers/resetdialog.h
+        Source/Forms/resetdialog.ui)
 
 target_link_libraries(${PROJECT_NAME}
         Qt5::Core

@@ -32,7 +32,7 @@ public:
     void PostHttpRequest(QUrl url, QJsonObject json, RequestId id, Modules module);
 
 private:
-    // 为何需要使用友无？？？
+    // 为何需要使用友元？？？
     // 在 Singleton 类中，_instance = std::shared_ptr<T>(new T);
     // 需要调用 T 类型的构造函数，即：需要调用 HttpManager 的构造函数
     friend class Singleton<HttpManager>;
@@ -51,6 +51,8 @@ signals:
     void signal_http_finish(RequestId id, QString str, ErrorCodes code, Modules module);
 
     void signal_register_finish(RequestId id, QString str, ErrorCodes code);
+
+    void signal_reset_finish(RequestId id, QString str, ErrorCodes code);
 };
 
 

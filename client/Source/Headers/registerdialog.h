@@ -25,11 +25,14 @@ public:
 
     ~RegisterDialog() override;
 
+public slots:
+
+    void slot_register_finish(RequestId id, QString str, ErrorCodes code);
+
 private slots:
 
     void on_get_code_clicked();
 
-    void slot_register_finish(RequestId id, QString str, ErrorCodes code);
 
     void on_sure_btn_clicked();
 
