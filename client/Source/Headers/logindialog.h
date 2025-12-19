@@ -56,6 +56,7 @@ public slots:
 
     void slot_login_finish(RequestId id, QString res, ErrorCodes err);
 
+    void slot_tcp_con_finish(bool);
 signals:
 
     void switchRegister();

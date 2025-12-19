@@ -19,12 +19,7 @@ find_package(Qt5 COMPONENTS
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Source/Headers)
 
 set(QRC "res/qrc/rc.qrc")
-set(ICO "res/qrc/Qtchat.rc"
-        Source/Cpp/timerbtn.cpp
-        Source/Headers/timerbtn.h
-        Source/Cpp/resetdialog.cpp
-        Source/Headers/resetdialog.h
-        Source/Forms/resetdialog.ui)
+set(ICO "res/qrc/Qtchat.rc")
 
 add_executable(${PROJECT_NAME}
         ${QRC}
@@ -47,8 +42,15 @@ add_executable(${PROJECT_NAME}
         Source/Cpp/clickedlabel.cpp
         Source/Headers/clickedlabel.h
         Source/Cpp/resetdialog.cpp
+        Source/Cpp/timerbtn.cpp
+        Source/Headers/timerbtn.h
+        Source/Cpp/resetdialog.cpp
         Source/Headers/resetdialog.h
-        Source/Forms/resetdialog.ui)
+        Source/Forms/resetdialog.ui
+        Source/Headers/resetdialog.h
+        Source/Forms/resetdialog.ui
+        Source/Headers/tcpmanager.cpp
+        Source/Headers/tcpmanager.h)
 
 target_link_libraries(${PROJECT_NAME}
         Qt5::Core

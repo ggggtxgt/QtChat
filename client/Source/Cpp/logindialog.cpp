@@ -9,6 +9,7 @@
 #include "../Headers/logindialog.h"
 #include "../Headers/httpmanager.h"
 #include "../Forms/ui_LoginDialog.h"
+#include "../Headers/TcpManager.h"
 
 LoginDialog::LoginDialog(QWidget *parent) :
         QDialog(parent), ui(new Ui::LoginDialog) {
@@ -24,6 +25,12 @@ LoginDialog::LoginDialog(QWidget *parent) :
     // 连接登录回包信号
     connect(HttpManager::GetInstance().get(), &HttpManager::signal_login_finish,
             this, &LoginDialog::slot_login_finish);
+    // 连接 tcp 连接请求的信号和槽
+    connect(this, &LoginDialog::signal_connect_tcp,
+            TcpManager::GetInstance().get(), &TcpManager::slot_tcp_connect);
+    // 连接 tcp 管理者发出的连接成功信号
+    connect(TcpManager::GetInstance().get(), &TcpManager::signal_con_success,
+            this, &LoginDialog::slot_tcp_con_finish);
 }
 
 LoginDialog::~LoginDialog() {
@@ -150,17 +157,17 @@ bool LoginDialog::enableBtn(bool enabled) {
 }
 
 void LoginDialog::initHttpHandlers() {
-//注册获取登录回包逻辑
-    _handlers.insert(RequestId::ID_LOGIN_USER, [this](QJsonObject jsonObj){
+    // 注册获取登录回包逻辑
+    _handlers.insert(RequestId::ID_LOGIN_USER, [this](QJsonObject jsonObj) {
         int error = jsonObj["error"].toInt();
-        if(error != ErrorCodes::SUCCESS){
-            showTip(tr("参数错误"),false);
+        if (error != ErrorCodes::SUCCESS) {
+            showTip(tr("参数错误"), false);
             enableBtn(true);
             return;
         }
         auto email = jsonObj["email"].toString();
 
-        //发送信号通知tcpMgr发送长链接
+        // 发送信号通知 TcpManager 发送长链接
         ServerInfo si;
         si.Uid = jsonObj["uid"].toInt();
         si.Host = jsonObj["host"].toString();
@@ -169,29 +176,29 @@ void LoginDialog::initHttpHandlers() {
 
         _uid = si.Uid;
         _token = si.Token;
-        qDebug()<< "email is " << email << " uid is " << si.Uid <<" host is "
-                << si.Host << " Port is " << si.Port << " Token is " << si.Token;
+        qDebug() << "email is " << email << " uid is " << si.Uid << " host is "
+                 << si.Host << " Port is " << si.Port << " Token is " << si.Token;
         emit signal_connect_tcp(si);
     });
 }
 
 void LoginDialog::slot_login_finish(RequestId id, QString res, ErrorCodes err) {
-    if(err != ErrorCodes::SUCCESS){
-        showTip(tr("网络请求错误"),false);
+    if (err != ErrorCodes::SUCCESS) {
+        showTip(tr("网络请求错误"), false);
         return;
     }
 
     // 解析 JSON 字符串,res需转化为QByteArray
     QJsonDocument jsonDoc = QJsonDocument::fromJson(res.toUtf8());
     //json解析错误
-    if(jsonDoc.isNull()){
-        showTip(tr("json解析错误"),false);
+    if (jsonDoc.isNull()) {
+        showTip(tr("json解析错误"), false);
         return;
     }
 
     //json解析错误
-    if(!jsonDoc.isObject()){
-        showTip(tr("json解析错误"),false);
+    if (!jsonDoc.isObject()) {
+        showTip(tr("json解析错误"), false);
         return;
     }
 
@@ -201,3 +208,19 @@ void LoginDialog::slot_login_finish(RequestId id, QString res, ErrorCodes err) {
     return;
 }
 
+void LoginDialog::slot_tcp_con_finish(bool success) {
+    if (success) {
+        showTip("聊天服务连接成功，正在登录...", true);
+        QJsonObject json;
+        json["uid"] = _uid;
+        json["token"] = _token;
+        QJsonDocument doc(json);
+        QString str = doc.toJson(QJsonDocument::Indented);
+
+        // 改善 tcp 请求到 chat server
+        TcpManager::GetInstance()->signal_send_data(RequestId::ID_CHAT_LOGIN, str);
+    } else {
+        showTip(tr("网络异常"), false);
+        enableBtn(true);
+    }
+}
